@@ -39,7 +39,7 @@ test:
     - if not exist %LIBRARY_LIB%\cfitsio.lib exit 1  # [win]
     - if not exist %LIBRARY_BIN%\cfitsio.dll exit 1  # [win]
   downstreams:
-    - gdal  # [x86_64]
+    - gdal  # [x86_64 and linux]
 
 about:
   home: http://heasarc.gsfc.nasa.gov/fitsio/fitsio.html
