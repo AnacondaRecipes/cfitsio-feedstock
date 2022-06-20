@@ -40,8 +40,9 @@ test:
     - test -f ${PREFIX}/lib/libcfitsio{{ SHLIB_EXT }}  # [not win]
     - if not exist %LIBRARY_LIB%\cfitsio.lib exit 1  # [win]
     - if not exist %LIBRARY_BIN%\cfitsio.dll exit 1  # [win]
-  downstreams:
-    - gdal  # [x86_64 and linux]
+  # Disable downstream "gdal" until gdal itself has been rebuilt.
+  # downstreams:
+      # - gdal  # [x86_64 and linux]
 
 about:
   home: https://heasarc.gsfc.nasa.gov/fitsio/fitsio.html
