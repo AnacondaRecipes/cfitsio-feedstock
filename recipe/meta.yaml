@@ -18,6 +18,8 @@ source:
 
 build:
   number: 7
+  ignore_run_exports:
+    - libgfortran5  # [osx]
   run_exports:
     - {{ pin_subpackage('cfitsio', max_pin='x.x.x') }}
 
