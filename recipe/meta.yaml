@@ -17,8 +17,9 @@ source:
     - lcurl-pkg-config.patch
 
 build:
-  number: 6
-  skip: True  # [win and py27]
+  number: 7
+  ignore_run_exports:
+    - libgfortran5  # [osx]
   run_exports:
     - {{ pin_subpackage('cfitsio', max_pin='x.x.x') }}
 
@@ -41,15 +42,16 @@ test:
     - test -f ${PREFIX}/lib/libcfitsio{{ SHLIB_EXT }}  # [not win]
     - if not exist %LIBRARY_LIB%\cfitsio.lib exit 1  # [win]
     - if not exist %LIBRARY_BIN%\cfitsio.dll exit 1  # [win]
-  downstreams:
-    - gdal  # [x86_64 and linux]
+  # Disable downstream "gdal" until gdal itself has been rebuilt.
+  # downstreams:
+      # - gdal  # [x86_64 and linux]
 
 about:
-  home: http://heasarc.gsfc.nasa.gov/fitsio/fitsio.html
-  license: fitsio
+  home: https://heasarc.gsfc.nasa.gov/fitsio/fitsio.html
+  license: Other
+  license_family: Other
   license_file: License.txt
   summary: "A library for reading and writing FITS files"
-
   description: |
     CFITSIO is a library of C and Fortran subroutines for reading and writing
     data files in FITS (Flexible Image Transport System) data format. CFITSIO
@@ -57,6 +59,7 @@ about:
     insulate the programmer from the internal complexities of the FITS format.
     CFITSIO also provides many advanced features for manipulating and filtering
     the information in FITS files.
+  dev_url: https://heasarc.gsfc.nasa.gov/fitsio/fitsio.html
   doc_url: https://heasarc.gsfc.nasa.gov/docs/software/fitsio/quick/quick.html
 
 extra:
