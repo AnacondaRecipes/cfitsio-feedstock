@@ -10,6 +10,8 @@ source:
   sha256: 66fd078cc0bea896b0d44b120d46d6805421a5361d3a5ad84d9f397b1b5de2cb                  # [not win]
   url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfit-{{ version }}.zip           # [win]
   sha256: e804d73e7304707e9f067892659eb517753e036eda7fa11511819b8ff6f943d6                  # [win]
+  patches:
+    - 0001-fix-include-order.patch  # [win]
 
 build:
   number: 0
@@ -22,6 +24,7 @@ requirements:
     - cmake
     - make  # [not win]
     - libtool  # [unix]
+    - m2-patch  # [win]
   host:
     - libcurl
     - bzip2

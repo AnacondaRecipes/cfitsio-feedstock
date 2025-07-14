@@ -1,0 +1,19 @@
+diff --git a/drvrmem.c b/drvrmem.c
+index 3696daf..85fde80 100644
+--- a/drvrmem.c
++++ b/drvrmem.c
+@@ -7,12 +7,13 @@
+ #include <string.h>
+ #include <stdlib.h>
+ #include <stddef.h>  /* apparently needed to define size_t */
+-#include "fitsio2.h"
+ 
+ #if HAVE_BZIP2
+ #include "bzlib.h"
+ #endif
+ 
++#include "fitsio2.h"
++
+ /* prototype for .Z file uncompression function in zuncompress.c */
+ int zuncompress2mem(char *filename, 
+              FILE *diskfile, 
