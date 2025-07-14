@@ -6,8 +6,10 @@ package:
   version: {{ version }}
 
 source:
-  url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/{{ name }}-{{ version }}.tar.gz
-  sha256: 66fd078cc0bea896b0d44b120d46d6805421a5361d3a5ad84d9f397b1b5de2cb
+  url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/{{ name }}-{{ version }}.tar.gz  # [not win]
+  sha256: 66fd078cc0bea896b0d44b120d46d6805421a5361d3a5ad84d9f397b1b5de2cb                  # [not win]
+  url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfit-{{ version }}.zip           # [win]
+  sha256: e804d73e7304707e9f067892659eb517753e036eda7fa11511819b8ff6f943d6                  # [win]
 
 build:
   number: 0
@@ -21,9 +23,9 @@ requirements:
     - make  # [not win]
     - libtool  # [unix]
   host:
-    - libcurl  # [not win]
-    - bzip2  # [not win]
-    - zlib  # [not win]
+    - libcurl
+    - bzip2
+    - zlib
 
 test:
   commands:
