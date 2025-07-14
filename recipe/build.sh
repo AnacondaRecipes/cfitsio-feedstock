@@ -6,7 +6,7 @@ cmake -S$SRC_DIR -Bbuild ${CMAKE_ARGS} \
     -DCMAKE_BUILD_TYPE=Release \
     -DUSE_BZIP2=ON
 
-cmake --build build --target install
+cmake --build build --target install --config Release
 
 # Test-ish programs:
 $PREFIX/bin/cookbook
