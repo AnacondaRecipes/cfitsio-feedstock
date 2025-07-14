@@ -1,33 +1,16 @@
 #! /bin/bash
 
-# Get an updated config.sub and config.guess
-cp -r ${BUILD_PREFIX}/share/libtool/build-aux/config.* .
+set -ex
 
-set -e
+cmake -S$SRC_DIR -Bbuild ${CMAKE_ARGS} \
+    -DUSE_BZIP2=ON
 
-if [ $(uname) = Darwin ] ; then
-    # Needed to get 'union semun' definition used in drvrsmem.c:
-    export CFLAGS="$CFLAGS -D_DARWIN_C_SOURCE"
-    export LIBS_PREPEND="-Wl,-reexport_library,$PREFIX/lib/libz.dylib"
-fi
-
-./configure --prefix=$PREFIX --with-bzip2 --enable-reentrant || { cat config.log ; exit 1 ; }
-
-make shared utils
-make install
+cmake --build build --target install
 
 # Test-ish programs:
 $PREFIX/bin/cookbook
 $PREFIX/bin/speed
-# Actual test suite as described in docs/cfitsio.doc
-$PREFIX/bin/testprog > testprog.lis
+# Actual test suite as described in README.md
+./build/testprog > testprog.lis
 diff testprog.lis testprog.out
 cmp testprog.fit testprog.std
-
-rm -f $PREFIX/bin/cookbook $PREFIX/bin/speed $PREFIX/bin/testprog
-
-# check symbol exports on osx
-if [ $(uname) = Darwin ]; then
-    ${OTOOL} -l $PREFIX/lib/libcfitsio.dylib | grep "LC_REEXPORT_DYLIB"
-fi
-    
