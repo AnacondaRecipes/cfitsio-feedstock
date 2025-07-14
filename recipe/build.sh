@@ -11,6 +11,6 @@ cmake --build build --target install
 $PREFIX/bin/cookbook
 $PREFIX/bin/speed
 # Actual test suite as described in README.md
-./build/testprog > testprog.lis
+./build/TestProg > testprog.lis
 diff testprog.lis testprog.out
 cmp testprog.fit testprog.std
