@@ -28,9 +28,9 @@ requirements:
     - libtool  # [unix]
     - m2-patch  # [win]
   host:
-    - libcurl
-    - bzip2
-    - zlib
+    - libcurl {{ libcurl }}
+    - bzip2 {{ bzip2 }}
+    - zlib {{ zlib }}
 
 test:
   commands:
