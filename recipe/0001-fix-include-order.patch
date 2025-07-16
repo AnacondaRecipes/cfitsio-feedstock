@@ -1,3 +1,13 @@
+From 2299a09bdf5f074c0cb2596810f60d446f015fc9 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Tomasz=20Bene=C5=9B?= <tbenes@anaconda.com>
+Date: Wed, 16 Jul 2025 10:09:48 +0200
+Subject: [PATCH] fix include order
+
+Include fitsio2.h as last one, so that Windows SDK doesn't conflict with TBYTE definition of cfitsio
+---
+ drvrmem.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
 diff --git a/drvrmem.c b/drvrmem.c
 index 3696daf..85fde80 100644
 --- a/drvrmem.c
@@ -17,3 +27,6 @@ index 3696daf..85fde80 100644
  /* prototype for .Z file uncompression function in zuncompress.c */
  int zuncompress2mem(char *filename, 
               FILE *diskfile, 
+-- 
+2.39.5 (Apple Git-154)
+
