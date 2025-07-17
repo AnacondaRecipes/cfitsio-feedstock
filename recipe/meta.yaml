@@ -1,41 +1,36 @@
 {% set name = "cfitsio" %}
-{% set version = "3.470" %}
-{% set nozeroversion = version[:-1] %}
-# This is the SHA256 hash of the ungzipped tar file. See https://github.com/conda/conda/issues/3798.
-{% set sha256 = "985606e058403c073a68d95be74e9696f0ded9414520784457a1d4cba8cca7e2" %}
+{% set version = "4.6.2" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/{{ name }}-{{ nozeroversion }}.tar.gz
-  sha256: {{ sha256 }}
+  url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/{{ name }}-{{ version }}.tar.gz  # [not win]
+  sha256: 66fd078cc0bea896b0d44b120d46d6805421a5361d3a5ad84d9f397b1b5de2cb                  # [not win]
+  url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfit-{{ version }}.zip           # [win]
+  sha256: e804d73e7304707e9f067892659eb517753e036eda7fa11511819b8ff6f943d6                  # [win]
   patches:
-    - ldflags.patch
-    - unvendor_zlib.patch
-    - lcurl-pkg-config.patch
+    - 0001-fix-include-order.patch  # [win]
 
 build:
-  number: 7
-  ignore_run_exports:
-    - libgfortran5  # [osx]
+  number: 0
   run_exports:
     - {{ pin_subpackage('cfitsio', max_pin='x.x.x') }}
 
 requirements:
   build:
-    - {{ compiler('fortran') }}  # [not win]
+    - {{ stdlib('c') }}
     - {{ compiler('c') }}
-    - cmake  # [win]
+    - {{ compiler('cxx') }}
+    - cmake
     - make  # [not win]
     - libtool  # [unix]
-    - patch     # [not win]
     - m2-patch  # [win]
   host:
-    - libcurl  # [not win]
-    - bzip2  # [not win]
-    - zlib  # [not win]
+    - libcurl {{ libcurl }}
+    - bzip2 {{ bzip2 }}
+    - zlib {{ zlib }}
 
 test:
   commands:
@@ -48,9 +43,9 @@ test:
 
 about:
   home: https://heasarc.gsfc.nasa.gov/fitsio/fitsio.html
-  license: Other
+  license: LicenseRef-fitsio
   license_family: Other
-  license_file: License.txt
+  license_file: licenses/License.txt
   summary: "A library for reading and writing FITS files"
   description: |
     CFITSIO is a library of C and Fortran subroutines for reading and writing

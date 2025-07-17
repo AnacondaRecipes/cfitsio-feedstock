@@ -1,30 +1,8 @@
+cmake -S%SRC_DIR% -Bbuild %CMAKE_ARGS% ^
+  -DCMAKE_BUILD_TYPE=Release ^
+  -DUSE_BZIP2=ON ^
+  -DUTILS=OFF
+if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
 
-mkdir build
-cd build
-
-cmake -G "NMake Makefiles" ^
-  -D CMAKE_INSTALL_PREFIX=%LIBRARY_PREFIX% ^
-  -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
-  -D CMAKE_BUILD_TYPE=Release ^
-  ..
-if errorlevel 1 exit 1
-
-nmake
-if errorlevel 1 exit 1
-
-:: test-ish programs (speed doesn't seem to get built)
-cookbook
-if errorlevel 1 exit 1
-testprog
-if errorlevel 1 exit 1
-  
-nmake install
-if errorlevel 1 exit 1
-
-:: DLL seems to go in wrong place
-move %LIBRARY_LIB%\cfitsio.dll %LIBRARY_BIN%
-if errorlevel 1 exit 1
-
-:: delete in case this breaks other things - only needed for compilation anyway
-del %LIBRARY_INC%\unistd.h
-if errorlevel 1 exit 1
+cmake --build build --target install --config Release
+if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
