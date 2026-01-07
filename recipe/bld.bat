@@ -6,6 +6,7 @@ cmake -G "NMake Makefiles" ^
   -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
   -D TESTS=On ^
   -D UTILS=On ^
+  -D USE_BZIP2=ON ^
   ..
 if errorlevel 1 exit 1
 

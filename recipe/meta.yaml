@@ -32,9 +32,46 @@ requirements:
 
 test:
   commands:
-    - test -f ${PREFIX}/lib/libcfitsio{{ SHLIB_EXT }}  # [not win]
+    # UNIX
+    - test -f ${PREFIX}/lib/libcfitsio{{ SHLIB_EXT }}  # [unix]
+    - test -f ${PREFIX}/lib/cmake/cfitsio/cfitsioConfig.cmake  # [unix]
+    - test -f ${PREFIX}/lib/cmake/cfitsio/cfitsioConfigVersion.cmake  # [unix]
+    - test -f ${PREFIX}/lib/cmake/cfitsio/cfitsioTargets-release.cmake  # [unix]
+    - test -f ${PREFIX}/lib/cmake/cfitsio/cfitsioTargets.cmake  # [unix]
+    - test -f ${PREFIX}/lib/pkgconfig/cfitsio.pc  # [unix]
+    - test -f ${PREFIX}/include/cfitsio_export.h  # [unix]
+    - test -f ${PREFIX}/include/fitsio.h  # [unix]
+    - test -f ${PREFIX}/include/fitsio2.h  # [unix]
+    - test -f ${PREFIX}/include/longnam.h  # [unix]
+    - test -f ${PREFIX}/bin/cookbook  # [unix]
+    - test -f ${PREFIX}/bin/fitscopy  # [unix]
+    - test -f ${PREFIX}/bin/fitsverify  # [unix]
+    - test -f ${PREFIX}/bin/fpack  # [unix]
+    - test -f ${PREFIX}/bin/funpack  # [unix]
+    - test -f ${PREFIX}/bin/imcopy  # [unix]
+    - test -f ${PREFIX}/bin/smem  # [unix]
+    - test -f ${PREFIX}/bin/speed  # [unix]
+    # WIN
     - if not exist %LIBRARY_LIB%\cfitsio.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\cfitsio.lib exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\cmake\cfitsio\cfitsioConfig.cmake exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\cmake\cfitsio\cfitsioConfigVersion.cmake exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\cmake\cfitsio\cfitsioTargets-release.cmake exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\cmake\cfitsio\cfitsioTargets.cmake exit 1  # [win]
+    - if not exist %LIBRARY_LIB%\pkgconfig\cfitsio.pc exit 1  # [win]
     - if not exist %LIBRARY_BIN%\cfitsio.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\cookbook.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\fitscopy.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\fitsverify.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\fpack.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\funpack.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\imcopy.exe exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\speed.exe exit 1  # [win]
+    - if not exist %LIBRARY_INC%\cfitsio_export.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\fitsio.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\fitsio2.h exit 1  # [win]
+    - if not exist %LIBRARY_INC%\longnam.h exit 1  # [win]
+    
   # Downstream tests are not possible due to cfitsio being pinned to a specific
   # major.minor.patch version in conda-forge-pinning. E.g. gdal is currently
   # build pinned against cfitsio 4.0.0, which means we cannot test a new version
@@ -57,7 +94,7 @@ about:
     insulate the programmer from the internal complexities of the FITS format.
     CFITSIO also provides many advanced features for manipulating and filtering
     the information in FITS files.
-  dev_url: https://heasarc.gsfc.nasa.gov/fitsio/fitsio.html
+  dev_url: https://github.com/HEASARC/cfitsio
   doc_url: https://heasarc.gsfc.nasa.gov/docs/software/fitsio/quick/quick.html
 
 extra:
