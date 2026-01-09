@@ -1,8 +1,27 @@
-cmake -S%SRC_DIR% -Bbuild %CMAKE_ARGS% ^
-  -DCMAKE_BUILD_TYPE=Release ^
-  -DUSE_BZIP2=ON ^
-  -DUTILS=OFF
-if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
+mkdir build
+cd build
 
-cmake --build build --target install --config Release
-if %ERRORLEVEL% neq 0 exit %ERRORLEVEL%
+cmake -G "NMake Makefiles" ^
+  %CMAKE_ARGS% ^
+  -D CMAKE_PREFIX_PATH=%LIBRARY_PREFIX% ^
+  -D TESTS=On ^
+  -D UTILS=On ^
+  -D USE_BZIP2=ON ^
+  ..
+if errorlevel 1 exit 1
+
+nmake
+if errorlevel 1 exit 1
+
+:: test-ish programs (speed doesn't seem to get built)
+cookbook
+if errorlevel 1 exit 1
+testprog
+if errorlevel 1 exit 1
+  
+nmake install
+if errorlevel 1 exit 1
+
+:: delete in case this breaks other things - only needed for compilation anyway
+del %LIBRARY_INC%\unistd.h
+if errorlevel 1 exit 1

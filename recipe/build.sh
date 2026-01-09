@@ -1,17 +1,33 @@
 #! /bin/bash
 
-set -ex
+set -xeuo pipefail
 
-cmake -S$SRC_DIR -Bbuild ${CMAKE_ARGS} \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DUSE_BZIP2=ON
+extra_cmake_args=(
+    -GNinja
+    -DTESTS=On
+    -DUTILS=On
+    -DUSE_BZIP2=On
+    -DUSE_CURL=On
+    -DUSE_PTHREADS=On
+    -DCMAKE_PREFIX_PATH=$PREFIX
+)
 
-cmake --build build --target install --config Release
+if [ $(uname) = Darwin ] ; then
+    # Needed to get 'union semun' definition used in drvrsmem.c:
+    export CXXFLAGS="$CXXFLAGS -D_DARWIN_C_SOURCE"
+fi
 
-# Test-ish programs:
-$PREFIX/bin/cookbook
-$PREFIX/bin/speed
-# Actual test suite as described in README.md
-./build/TestProg > testprog.lis
-diff testprog.lis testprog.out
-cmp testprog.fit testprog.std
+# The Autotools-based build supports a few additional features, like support for
+# Globus gsiftp. Unless we decide that we need one of those, the CMake build is
+# maintained and is nicer to deal with.
+
+mkdir build
+cd build
+cmake ${CMAKE_ARGS} "${extra_cmake_args[@]}" $SRC_DIR
+ninja -v
+ninja install
+
+./cookbook
+./TestProg >testprog.lis
+diff testprog.lis ../testprog.out
+cmp testprog.fit ../testprog.std
