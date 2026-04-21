@@ -1,5 +1,6 @@
 anaconda_config_version: 1
 upstream_sources:
-  - webpage:
-      url: http://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfitsio-{}.tar.gz
-      regex: (?:.*)cfitsio-(.*)\.tar\.gz
+  - github:
+      identifier: HEASARC/cfitsio
+      use_max_tag: true
+      strip_prefix: cfitsio-
