@@ -3,4 +3,4 @@ upstream_sources:
   - github:
       identifier: HEASARC/cfitsio
       use_max_tag: true
-      strip_prefix: cfitsio-
+      prefix: cfitsio-
