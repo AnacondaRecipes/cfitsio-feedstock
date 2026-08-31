@@ -1,5 +1,5 @@
 {% set name = "cfitsio" %}
-{% set version = "4.6.3" %}
+{% set version = "4.7.0" %}
 
 package:
   name: {{ name }}
@@ -7,9 +7,9 @@ package:
 
 source:
   url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/{{ name }}-{{ version }}.tar.gz  # [not win]
-  sha256: fad44fff274fdda5ffcc0c0fff3bc3c596362722b9292fc8944db91187813600                  # [not win]
+  sha256: ce573bbea8e75b429f8c3d3e86498741ba3dc9628a1530d2f65268397ad059e8                  # [not win]
   url: https://heasarc.gsfc.nasa.gov/FTP/software/fitsio/c/cfit-{{ version }}.zip           # [win]
-  sha256: 03096642e79f8848d4f75676e40091f7ea4f783d844aa42b316806ebb2b3d075                  # [win]
+  sha256: 63ec1941a239832e90f71dde32422f9c5cbafc161950102b3f2ba5516d864a5f                  # [win]
   patches:
     - 0001-fix-include-order.patch  # [win]
 
